@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Tracing;
 
 class Produto
 
@@ -10,59 +11,51 @@ class Produto
 
 public Produto (string nome, double preco, int quantidade)
     {
-        if(nome == " ")
-        {
-            Console.WriteLine("Campo em branco. Preencha com o nome do produto.");
-        } else
-        {
-            Console.WriteLine("Nome cadastrado");
-        }
-
-        if(preco < 0)
-        {
-            Console.WriteLine("Preencha o preço válido do produto.");
-        } else
-        {
-            Console.WriteLine("Preço cadastrado.");
-        }
-
+        if(string.IsNullOrWhiteSpace(nome))
+            throw new Exception("O campo não pode ficar em branco");
+        
+        if(preco <= 0)
+            throw new Exception("O preço deve ser maior do que zero");
+         
         if(quantidade < 0)
-        {
-            Console.WriteLine("Preencha a quantidade válida do produto.");
-        }else
-        {
-            Console.WriteLine("Quantidade cadastrada.");
-        }
+            throw new Exception("A quantidade não pode ser negativa");
 
         Nome = nome;
         Preco = preco;
         Quantidade = quantidade;
 
     }
-
 }
-
 class Program
 {
     static void Main()
     {
         List<Produto> produtos = new List<Produto>();
 
-        Console.Write("Nome do Produto: ");
+        try
+        {
+            Console.Write("Nome do Produto: ");
         string nome = Console.ReadLine();
 
         Console.Write("Preço do Produto: ");
-        double preco = double.Parse(Console.ReadLine());
+         if (!double.TryParse(Console.ReadLine(), out double preco)) 
+            throw new Exception("Preço inválido.");
 
-        Console.Write("Quantidade do Produto: ");
-        int quantidade = int.Parse(Console.ReadLine());
+        Console.Write("Quantidade do Produto em estoque: ");
+         if(!int.TryParse(Console.ReadLine(), out int quantidade))
+            throw new Exception("Quantidade inválida.");
+        
+            Produto produto = new Produto(nome, preco,quantidade);
+            produtos.Add(produto);
 
-        Produto p = new Produto(nome, preco, quantidade);
+            Console.WriteLine("Produto cadastrado!");
 
-        if(!string.IsNullOrEmpty(p.Nome))
-        {
-            produtos.Add(p);
         }
-
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro {ex.Message}");
+        }
     }
 }
+
+
