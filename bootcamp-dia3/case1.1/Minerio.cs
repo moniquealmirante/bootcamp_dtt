@@ -4,4 +4,9 @@ class Minerio
    public string tipo;
 }
 
-
+public enum Refinamento
+{
+   Teor,
+   Granularidade,
+   Recuperacao
+}

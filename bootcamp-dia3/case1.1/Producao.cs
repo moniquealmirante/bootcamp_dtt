@@ -1,66 +1,38 @@
 
 
 class Producao
-
 {
-    private Minerio minerio;
-    string ano;
-    decimal quantidade;
-    DateTime data;
-    decimal volume;
+    private int id;
+    private string codigoMina;
+    private DateTime data;
+    private decimal volume;
 
-    public string getAno()
+    decimal getVolume()
     {
-    return this.ano;
+        return this.volume;
     }
-
-    public void setAno()
-    {
-        
-    }
-
-    public decimal getQuantidade()
-    {
-      return this.quantidade;  
-    }
-
-    public void setQuantidade()
-    {
-        
-    }
-
-    public DateTime getData()
-    {
-        return this.data;
-    }
-
-    public void setData()
-    {
-        
-    }
-
-    public decimal getVolume()
+    
+    decimal setVolume()
     {
         return this.volume;
     }
 
-    public void setVolume()
+
+    public int refinarMinerio(Minerio pMinerio, Refinamento refinamento)
     {
-        
+        switch (refinamento)
+        {
+            case Refinamento.Granularidade:
+            return 0;
+        }
+
+        return this.quantidadeFinalRefinamento(pMinerio);
     }
 
-    //getters e setters
-
-    public int refinarMinerio(Minerio pMinerio)
+        private int quantidadeFinalRefinamento(Minerio pMinerio)
     {
-        return quantidadeFinalRefinamento(minerio);
+        return 1;
     }
-
-    private int quantidadeFinalRefinamento()
-    {
-        return
-    }
-
 
 }
 
