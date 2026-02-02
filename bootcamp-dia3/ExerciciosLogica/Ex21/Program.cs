@@ -1,4 +1,4 @@
-﻿Console.WriteLine("Digite a letra F ou M para informar o seu sexo (F para Feminino e M para masculino)");
+﻿Console.WriteLine("Digite a letra F ou M para informar o seu sexo (F para Feminino e M para masculino): ");
 //entrada de usuário
 string sexo = Console.ReadLine();
 

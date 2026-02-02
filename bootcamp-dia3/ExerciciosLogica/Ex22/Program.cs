@@ -1,6 +1,6 @@
 ﻿Console.WriteLine("Digite uma letra para identificar se é vogal ou consoante");
 //entrada de usuário
-char letra = Console.ReadLine()[0];
+string letra = Console.ReadLine();
 
 //dá a condição
 if (letra == "A" && "E" || "I" || "O" || "U") 
