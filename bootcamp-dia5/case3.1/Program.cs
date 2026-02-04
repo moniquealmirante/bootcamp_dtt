@@ -72,7 +72,7 @@ int proximoId = 1;
 			Console.WriteLine("Documento: ");
 			v.Documento = Console.ReadLine();
 
-			Console.WriteLine("Primeira visita? (s/n): ")
+			Console.WriteLine("Primeira visita? (s/n): ");
 			v.EhPrimeiraVez = Console.ReadLine().ToLower() == "s";
 
 			v.HorarioChegada = DateTime.Now;
@@ -113,7 +113,7 @@ int proximoId = 1;
 		Console.WriteLine(
 		$"ID: {visitantes[i].Id} | " +
 		$"Nome: {visitantes[i].Nome} | " +
-		$"Chegada: {visitantes[i].HorarioChegada} | +
+		$"Chegada: {visitantes[i].HorarioChegada} | " +
 		$"Saída: {visitantes[i].HorarioSaida}"
 
 		);
