@@ -1,15 +1,15 @@
 
-
-using System.Security.Cryptography.X509Certificates;
-
 class Visitante
-{
-    public string Nome {get; }
-    public string Documento {get; }
-    public DateTime HorarioChegada {get ;}
-    public bool EhPrimeiraVez {get; }
+{	
+	public int Id {get; set; }
+    	public string Nome {get; set; }
+    	public string Documento {get; set; }
+    	public DateTime HorarioChegada {get; set; }
+	    public DateTime HorarioSaida {get; set; }
+    	public bool EhPrimeiraVez {get; set; }
     
 }
+
 
 
 
