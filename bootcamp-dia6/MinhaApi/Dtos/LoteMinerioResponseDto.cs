@@ -6,13 +6,15 @@ namespace MinhaApi.Dtos
         int Id,
         string CodigoLote,
         string MinaOrigem,
+        string LocalizacaoAtual,
         decimal TeorFe,
         decimal Umidade,
         decimal? SiO2,
         decimal? P,
         decimal Toneladas,
         DateTime DataProducao,      
-        StatusLote Status,
-        string LocalizacaoAtual
+        StatusLote Status
+        
+        
     );
 }

@@ -86,13 +86,70 @@ namespace MinhaApi.Controllers
             if (l is null) return NotFound();
 
             var dto = new LoteMinerioResponseDto(
-                l.Id, l.CodigoLote, l.MinaOrigem, l.TeorFe, l.Umidade, l.SiO2, l.P,
-                l.Toneladas, l.DataProducao, l.Status, l.LocalizacaoAtual
+                l.Id, l.CodigoLote, l.MinaOrigem, l.LocalizacaoAtual, l.TeorFe, l.Umidade, l.SiO2,
+                l.P, l.Toneladas, l.DataProducao, l.Status
             );
 
             return Ok(dto);
         }
 
+        
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var lote = await _db.LotesMinerio.FindAsync(id);
+            if (lote is null)
+                return NotFound();
+
+            _db.LotesMinerio.Remove(lote);
+            await _db.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [HttpPut("{id:int}")]
+public async Task<IActionResult> Update(int id, [FromBody] CreateLoteMinerioDto input)
+{
+    // 1 & 2. ID já recebido na rota e DTO no corpo da requisição
+
+    // 3. Valida os campos (reaproveitando a lógica do POST)
+    if (string.IsNullOrWhiteSpace(input.CodigoLote))
+        return BadRequest("CodigoLote é obrigatório.");
+    if (input.TeorFe is < 0 or > 100)
+        return BadRequest("TeorFe inválido.");
+    // ... (adicione as outras validações conforme necessário)
+
+    // 4. Buscar no banco
+    var lote = await _db.LotesMinerio.FirstOrDefaultAsync(x => x.Id == id);
+
+    // 5. Se não existir → 404
+    if (lote == null)
+        return NotFound($"Lote com ID {id} não encontrado.");
+
+    // 6. Atualizar os campos
+    lote.CodigoLote = input.CodigoLote;
+    lote.MinaOrigem = input.MinaOrigem;
+    lote.TeorFe = input.TeorFe;
+    lote.Umidade = input.Umidade;
+    lote.SiO2 = input.SiO2;
+    lote.P = input.P;
+    lote.Toneladas = input.Toneladas;
+    lote.DataProducao = input.DataProducao ?? lote.DataProducao; // Mantém a antiga se a nova for nula
+    lote.Status = (StatusLote)input.Status;
+    lote.LocalizacaoAtual = input.LocalizacaoAtual;
+
+    // 7. Salvar no banco
+    try 
+    {
+        await _db.SaveChangesAsync();
+    }
+    catch (DbUpdateException)
+    {
+        return BadRequest("Erro ao atualizar o banco de dados. Verifique se o CodigoLote já existe.");
+    }
+
+    // 8. Retornar 204 No Content
+    return NoContent();
+}
         
         // [HttpGet("")]
         // [ProducesResponseType(typeof(IEnumerable<LoteMinerio>), StatusCodes.Status200OK)]
