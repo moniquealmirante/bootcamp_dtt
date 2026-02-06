@@ -7,7 +7,7 @@ using MinhaApi.Dtos;
 namespace MinhaApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/LotesMinerio")]
     public class LotesMinerioController : ControllerBase
     {
         private readonly AppDbContext _db;
@@ -56,11 +56,52 @@ namespace MinhaApi.Controllers
             return CreatedAtAction(nameof(GetById), new { id = lote.Id }, lote);
         }
 
+         [HttpGet]
+        public async Task<ActionResult<IEnumerable<LoteMinerioResponseDto>>> GetAll()
+        {
+            var lotes = await _db.LotesMinerio
+                .Select(l => new LoteMinerioResponseDto(
+                    l.Id,
+                    l.CodigoLote,
+                    l.MinaOrigem,
+                    l.LocalizacaoAtual,
+                    l.TeorFe,
+                    l.Umidade,
+                    l.SiO2,
+                    l.P,
+                    l.Toneladas,
+                    l.DataProducao,
+                    l.Status
+                ))
+                .ToListAsync();
+
+            return Ok(lotes);
+        }
+
         [HttpGet("{id:int}")]
+        
         public async Task<IActionResult> GetById(int id)
         {
-            var lote = await _db.LotesMinerio.FindAsync(id);
-            return lote is null ? NotFound() : Ok(lote);
+            var l = await _db.LotesMinerio.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            if (l is null) return NotFound();
+
+            var dto = new LoteMinerioResponseDto(
+                l.Id, l.CodigoLote, l.MinaOrigem, l.TeorFe, l.Umidade, l.SiO2, l.P,
+                l.Toneladas, l.DataProducao, l.Status, l.LocalizacaoAtual
+            );
+
+            return Ok(dto);
         }
+
+        
+        // [HttpGet("")]
+        // [ProducesResponseType(typeof(IEnumerable<LoteMinerio>), StatusCodes.Status200OK)]
+        // public async Task<IActionResult> GetAll()
+        // {
+        //     var lotes = await _db.LotesMinerio.AsNoTracking().ToListAsync();
+        //     return Ok(lotes);
+        // }
+        
+
     }
 }
