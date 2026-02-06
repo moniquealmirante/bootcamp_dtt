@@ -1,0 +1,15 @@
+Para construir o sistema de cadastro de visitantes primeiro comecei 
+declarando os objetos da classe visitante, usando get e set e tipos
+de dados int, string, datetime e bool.
+
+Na classe main comecei declarando a list visitantes instanciando a 
+classe visitante para listar os visitantes. declarei uma
+variavel int para registrar o Id do visitante.
+
+Criei um do while para um menu de opções para realizar o cadastro
+também um try catch contendo os métodos criados para dar  
+funcionalidade na escolha feita pelo usuário. 
+
+Para finalizar, criei as funções dos métodos para cadastrar o
+visitante, listar o visitante, buscar visitante pelo nome e registrar
+a saída de um visitante.
