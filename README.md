@@ -10,6 +10,6 @@ Esse repositório reúne todo o aprendizado do bootcamp de .NET
 - Adicionar objetos na lista criada
 - Instanciar classes no program principal
 - Exercícios de Lógica, Programação Orientada a Objetos e Estrutura de Dados
-- Estrutura MVC
+- Estrutura MVC (Model, View, Controller)
 - Uso do Docker, Rancher, Redis, Insomnia e Visual Studio Code 
 
