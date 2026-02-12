@@ -4,8 +4,9 @@ Esse repositório reúne todo o aprendizado do bootcamp de .NET
 - Declaração de variáveis
 - API e uso de Sweagger 
 - Classes com métodos GET e SET 
-- Método IF-ELSE
+- Método If-Else
 - Método Try-Catch
+- Método Switch-Case
 - Criar lista 
 - Adicionar objetos na lista criada
 - Instanciar classes no program principal
