@@ -1,11 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using MinhaApi.Data; 
+using StackExchange.Redis;
+using MinhaApi.Queue;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 
-// Registro do DbContext com Npgsql
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -16,10 +18,27 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 
-// Recomendação do Npgsql para compatibilidade de timestamp (se aplicável)
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddControllers();
+
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+{
+    var cs = builder.Configuration["Redis:ConnectionString"]!;
+    return ConnectionMultiplexer.Connect(cs);
+});
+
+
+// options da fila
+builder.Services.Configure<RedisQueueOptions>(builder.Configuration.GetSection("Redis"));
+
+//enfileira
+builder.Services.AddSingleton<ILoteQueueProducer, LoteQueueProducer>();
+
+//processa
+builder.Services.AddHostedService<LoteQueueWorker>();
+
 
 var app = builder.Build();
 
@@ -30,7 +49,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Mapear controllers
 app.MapControllers();
 
 app.Run();
