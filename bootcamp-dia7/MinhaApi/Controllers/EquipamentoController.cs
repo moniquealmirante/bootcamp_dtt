@@ -5,7 +5,7 @@ using MinhaApi.Data;
 using MinhaApi.Entities;
 
 [ApiController]
-[Route("api/equipamentos")]
+[Route("api/equipamento")]
 public class EquipamentosController : ControllerBase
 {
     private readonly AppDbContext _context;
