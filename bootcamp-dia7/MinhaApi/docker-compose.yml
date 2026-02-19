@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: equipamentos_db
+    environment:
+      POSTGRES_DB: equipamentos
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+  api:
+    build: .
+    container_name: equipamentos_api
+    ports:
+      - "5000:8080"
+    depends_on:
+      - postgres
