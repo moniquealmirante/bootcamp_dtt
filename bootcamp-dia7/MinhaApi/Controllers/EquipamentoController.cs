@@ -1,3 +1,9 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MinhaApi.Data;
+using MinhaApi.Entities;
+
 [ApiController]
 [Route("api/equipamentos")]
 public class EquipamentosController : ControllerBase

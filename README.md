@@ -14,3 +14,6 @@ Esse repositório reúne todo o aprendizado do bootcamp de .NET
 - Estrutura MVC (Model, View, Controller)
 - Uso do Docker, Rancher, Redis, Insomnia e Visual Studio Code 
 
+
+// Desafio Final
+https://github.com/moniquealmirante/bootcamp_dtt/tree/main/bootcamp-dia7/MinhaApi
