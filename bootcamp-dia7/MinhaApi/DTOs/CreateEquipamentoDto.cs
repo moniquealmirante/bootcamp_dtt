@@ -1,4 +1,7 @@
-public class CreateEquipamento
+using System.ComponentModel.DataAnnotations;
+
+namespace MinhaApi.DTOs;
+public class CreateEquipamentoDto
 {
     [Required]
     public string Codigo { get; set; } = null!;

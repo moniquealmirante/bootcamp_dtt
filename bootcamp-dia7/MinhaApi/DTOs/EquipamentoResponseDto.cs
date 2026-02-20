@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+namespace MinhaApi.DTOs;
 public class EquipamentoResponseDto
 {
     public int Id { get; set; }

@@ -1,5 +1,5 @@
 
-
+namespace MinhaApi.Entities;
 
 public class Equipamento
 {
@@ -10,4 +10,7 @@ public class Equipamento
     public decimal Horimetro { get ; set; }
     public StatusOperacional StatusOperacional { get; set; }
     public string? LocalizacaoAtual { get; set; } 
+    public DateOnly DataAquisicao { get; set; }
 }
+
+

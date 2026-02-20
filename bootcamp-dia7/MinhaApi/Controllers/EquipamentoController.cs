@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MinhaApi.Data;
 using MinhaApi.Entities;
+using MinhaApi.DTOs;
+using MinhaApi.Data;
+
+namespace MinhaApi.Controllers;
 
 [ApiController]
 [Route("api/equipamento")]
@@ -15,7 +17,6 @@ public class EquipamentosController : ControllerBase
         _context = context;
     }
 
-    // POST
     [HttpPost]
     public async Task<IActionResult> Create(CreateEquipamentoDto dto)
     {
@@ -41,7 +42,6 @@ public class EquipamentosController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = equipamento.Id }, equipamento);
     }
 
-    // GET com paginação e filtros
     [HttpGet]
     public async Task<IActionResult> GetAll(
         int page = 1,
@@ -52,11 +52,11 @@ public class EquipamentosController : ControllerBase
     {
         var query = _context.Equipamentos.AsQueryable();
 
-        if (!string.IsNullOrEmpty(tipo))
-            query = query.Where(e => e.Tipo.ToString() == tipo);
+        if (!string.IsNullOrEmpty(tipo) && Enum.TryParse<TipoEquipamento>(tipo, true, out var tipoEnum))
+            query = query.Where(e => e.Tipo == tipoEnum);
 
-        if (!string.IsNullOrEmpty(status))
-            query = query.Where(e => e.StatusOperacional.ToString() == status);
+        if (!string.IsNullOrEmpty(status) && Enum.TryParse<StatusOperacional>(status, true, out var statusEnum))
+            query = query.Where(e => e.StatusOperacional == statusEnum);
 
         if (!string.IsNullOrEmpty(codigo))
             query = query.Where(e => e.Codigo.Contains(codigo));
@@ -68,10 +68,16 @@ public class EquipamentosController : ControllerBase
             .Take(pageSize)
             .ToListAsync();
 
-        return Ok(new { total, page, pageSize, data });
+        return Ok(new
+        {
+            total,
+            page,
+            pageSize,
+            totalPages = (int)Math.Ceiling((double)total / pageSize),
+            data
+        });
     }
 
-    // GET por id
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -81,7 +87,6 @@ public class EquipamentosController : ControllerBase
         return Ok(equipamento);
     }
 
-    // PUT
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, CreateEquipamentoDto dto)
     {
@@ -99,7 +104,6 @@ public class EquipamentosController : ControllerBase
         return NoContent();
     }
 
-    // DELETE
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

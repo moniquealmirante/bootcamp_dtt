@@ -1,3 +1,7 @@
+
+using Microsoft.EntityFrameworkCore;
+namespace MinhaApi.Data;
+using MinhaApi.Entities;
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options)
